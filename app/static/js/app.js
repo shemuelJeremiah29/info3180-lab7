@@ -32,7 +32,32 @@ Vue.component('app-footer', {
 });
 
 const uploadform= Vue.component('upload-form', {
-    template: ` 
+    template: `  
+    <div>   
+    
+    <div> 
+        
+         <ul v-for= "(message, fname, descript) in message_notif"> 
+            <div v-if= "fname == 'errors'">  
+              <div class="check">   
+                    <li v-for= "fname in message_notif.errors"> 
+                        {{fname}}
+                    </li>    
+                 </li>
+              </div>   
+             </div> 
+             
+            <div v-else> 
+                <div class= "passed"> 
+                    <li v-for = "(message, index, descript) in message_notif"> 
+                        {{descript}}
+                    </li>
+                </div>
+            </div>
+        </ul>  
+        
+    </div>        
+    
     <form @submit.prevent="uploadPhoto" method='post' id="uploadForm" enctype='multipart/form-data' > 
        <div class="layout">
     
@@ -41,17 +66,19 @@ const uploadform= Vue.component('upload-form', {
         
             <label for="photo">Photo</label>
             <input type="file" name="photo" class="photo" accept= "image/*" />  
-            </div> 
+        </div> 
         
         <button type="submit" name="btn">Upload Photo</button>
         
-    </form>
+    </form>  
+    </div> 
+
     `, 
     methods:{ 
         uploadPhoto: function (){ 
             let uploadForm = document.getElementById('uploadForm'); 
             let form_data = new FormData(uploadForm); 
-            
+            let self= this;  
             fetch("/api/upload", {
                 
                 method: 'POST',  
@@ -69,13 +96,20 @@ const uploadform= Vue.component('upload-form', {
                 })
                 .then(function (jsonResponse){
                     //display a success message 
-                    console.log(jsonResponse);
+                    console.log(jsonResponse); 
+                    self.message_notif=jsonResponse; 
                 })
                 .catch(function (error){
                     console.log(error);
                 }); 
             } 
-        }
+        }, 
+        data: function () {  
+            return {
+            message_notif: [] 
+            }
+                
+            }
 }); 
     
 const Home = Vue.component('home', {

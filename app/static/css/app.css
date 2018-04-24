@@ -2,12 +2,23 @@ body {
     padding-top: 5rem;
 } 
 
-.descript{ 
-    
+.check { 
+    list-style-type: none; 
+    background-color: #FF0000; 
+    color: black;    
+    padding: 10px; 
+    border:solid #FF0033; 
+    border-radius: 10px;
 } 
 
-.photo{ 
-    
-} 
+.passed{  
+    list-style-type: none;
+    background-color: #33FFFF; 
+    color: black;  
+    padding: 10px; 
+    border: solid #00FFFF 2px;
+    border-radius: 10px;
+}
+
 
 
